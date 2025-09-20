@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Commit2Team - Team Workspace</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #0f0f12; color: #f0f0f0; }
+    .container { max-width: 1200px; margin: 20px auto; padding: 20px; }
+    h1, h2 { color: #bb86fc; }
+    .dashboard, .workspace, .notifications { background: #1a1a1d; padding: 20px; margin: 15px 0; border-radius: 12px; }
+    .dashboard p, .notifications li, .task-item, .learn-item, .community-message { margin: 6px 0; }
+    .sections { display: flex; gap: 20px; margin: 20px 0; }
+    .section-card { flex: 1; background: #1e1e22; padding: 15px; text-align: center; border-radius: 12px; cursor: pointer; transition: transform 0.2s; }
+    .section-card:hover { transform: scale(1.05); background: #27272c; }
+    .workspace { min-height: 300px; }
+    input, button, textarea { padding: 8px; border-radius: 6px; border: none; font-size: 1rem; }
+    input, textarea { width: 70%; margin-right: 10px; background: #26262a; color: #fff; outline: none; }
+    button { background: linear-gradient(135deg,#8a2be2,#bb86fc); color: #fff; cursor: pointer; }
+    button:hover { opacity: 0.9; }
+    ul { list-style: none; padding-left: 0; }
+    .task-item.completed { text-decoration: line-through; color: #888; }
+    .badge { background: #bb86fc; color: #0f0f12; padding: 3px 8px; border-radius: 6px; font-size: 0.85rem; margin-left: 5px; }
+    .code-editor { display: flex; gap: 10px; margin-top: 10px; }
+    textarea { flex: 1; height: 250px; font-family: monospace; font-size: 14px; }
+    iframe { flex: 1; border: 1px solid #333; border-radius: 6px; background: #fff; height: 250px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Commit2Team Workspace</h1>
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+      <h2>Team Dashboard</h2>
+      <p>Team Members: <span id="teamMembers">3</span></p>
+      <p>Tasks Completed: <span id="tasksCompleted">0</span></p>
+      <p>Resumes Uploaded: <span id="resumesUploaded">3</span></p>
+      <p>Team Synergy: <span id="teamScore">0%</span></p>
+    </div>
+
+    <!-- Sections -->
+    <div class="sections">
+      <div class="section-card" onclick="openSection('collaborate')">🤝 Collaborate</div>
+      <div class="section-card" onclick="openSection('learn')">📚 Learn</div>
+      <div class="section-card" onclick="openSection('grow')">🚀 Grow</div>
+      <div class="section-card" onclick="openSection('community')">🌐 Community</div>
+    </div>
+
+    <!-- Workspace -->
+    <div id="workspace" class="workspace">
+      <p>Select a section to interact.</p>
+    </div>
+
+    <!-- Notifications -->
+    <div class="notifications">
+      <h2>Notifications</h2>
+      <ul id="teamNotifications"></ul>
+    </div>
+
+    <button onclick="goBack()">← Back to Home</button>
+  </div>
+
+  <script>
+    // Dashboard & Data
+    let tasksCompleted = 0;
+    let teamScore = 0;
+    const notifications = [];
+    const tasks = [];
+    const learnResources = [
+      { title: "Intro to HTML/CSS", done: false },
+      { title: "JavaScript Basics", done: false },
+      { title: "React Tutorial", done: false },
+      { title: "Python ML Basics", done: false }
+    ];
+    const communityMessages = [];
+
+    // Dashboard Update
+    function updateDashboard() {
+      document.getElementById('tasksCompleted').innerText = tasksCompleted;
+      teamScore = Math.min(100, tasksCompleted * 10);
+      document.getElementById('teamScore').innerText = teamScore + "%";
+    }
+
+    function addNotification(msg) {
+      notifications.push(msg);
+      const ul = document.getElementById('teamNotifications');
+      const li = document.createElement('li');
+      li.innerText = msg;
+      ul.appendChild(li);
+    }
+
+    // Sections
+    function openSection(section) {
+      const ws = document.getElementById('workspace');
+      ws.innerHTML = '';
+      if(section === 'collaborate') {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <h2>Collaborate - Task & Code Board</h2>
+          <h3>Task Board</h3>
+          <input type="text" id="newTask" placeholder="New task">
+          <button onclick="addTask()">Add Task</button>
+          <ul id="taskList"></ul>
+          <h3>Live Code Editor</h3>
+          <div class="code-editor">
+            <textarea id="codeHTML" placeholder="HTML"></textarea>
+            <textarea id="codeCSS" placeholder="CSS"></textarea>
+            <textarea id="codeJS" placeholder="JS"></textarea>
+            <iframe id="preview"></iframe>
+          </div>
+          <button onclick="runCode()">Run Code</button>
+        `;
+        ws.appendChild(div);
+        renderTasks();
+      }
+      else if(section === 'learn') {
+        const div = document.createElement('div');
+        div.innerHTML = `<h2>Learn - Resources</h2><ul id="learnList"></ul>`;
+        ws.appendChild(div);
+        renderLearn();
+      }
+      else if(section === 'grow') {
+        const div = document.createElement('div');
+        div.innerHTML = `<h2>Grow - Badges & Progress</h2><ul id="badgeList"></ul>`;
+        ws.appendChild(div);
+        renderBadges();
+      }
+      else if(section === 'community') {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <h2>Community - Chat & Discussion</h2>
+          <ul id="communityList"></ul>
+          <input type="text" id="newMessage" placeholder="Type a message">
+          <button onclick="postMessage()">Send</button>
+        `;
+        ws.appendChild(div);
+        renderCommunity();
+      }
+    }
+
+    // Collaborate - Task Board
+    function addTask() {
+      const input = document.getElementById('newTask');
+      const task = input.value.trim();
+      if(task) {
+        tasks.push({ name: task, done: false });
+        addNotification(`New task added: ${task}`);
+        renderTasks();
+        input.value = '';
+      }
+    }
+
+    function toggleTask(index) {
+      tasks[index].done = !tasks[index].done;
+      if(tasks[index].done) tasksCompleted++;
+      else tasksCompleted--;
+      updateDashboard();
+      renderTasks();
+    }
+
+    function renderTasks() {
+      const ul = document.getElementById('taskList');
+      if(!ul) return;
+      ul.innerHTML = '';
+      tasks.forEach((t,i) => {
+        const li = document.createElement('li');
+        li.className = 'task-item' + (t.done ? ' completed' : '');
+        li.innerHTML = `<span>${t.name}</span> <button onclick="toggleTask(${i})">${t.done ? 'Undo' : 'Done'}</button>`;
+        ul.appendChild(li);
+      });
+      updateDashboard();
+    }
+
+    // Collaborate - Code Editor
+    function runCode() {
+      const html = document.getElementById('codeHTML').value;
+      const css = "<style>" + document.getElementById('codeCSS').value + "</style>";
+      const js = "<script>" + document.getElementById('codeJS').value + "<\/script>";
+      const preview = document.getElementById('preview');
+      preview.srcdoc = html + css + js;
+    }
+
+    // Learn
+    function renderLearn() {
+      const ul = document.getElementById('learnList');
+      ul.innerHTML = '';
+      learnResources.forEach((res,i) => {
+        const li = document.createElement('li');
+        li.className = 'learn-item';
+        li.innerHTML = `${res.title} <button onclick="completeLearn(${i})">${res.done ? 'Completed' : 'Mark Done'}</button>`;
+        ul.appendChild(li);
+      });
+    }
+
+    function completeLearn(index) {
+      learnResources[index].done = true;
+      addNotification(`Completed learning: ${learnResources[index].title}`);
+      renderLearn();
+    }
+
+    // Grow / Badges
+    function renderBadges() {
+      const ul = document.getElementById('badgeList');
+      if(!ul) return;
+      ul.innerHTML = '';
+      if(tasksCompleted > 0) {
+        const li = document.createElement('li');
+        li.innerHTML = `Task Master <span class="badge">+${tasksCompleted} tasks</span>`;
+        ul.appendChild(li);
+      }
+      const learned = learnResources.filter(r => r.done).length;
+      if(learned > 0) {
+        const li = document.createElement('li');
+        li.innerHTML = `Learning Achiever <span class="badge">+${learned} completed</span>`;
+        ul.appendChild(li);
+      }
+    }
+
+    // Community
+    function postMessage() {
+      const input = document.getElementById('newMessage');
+      const msg = input.value.trim();
+      if(msg) {
+        communityMessages.push(msg);
+        addNotification(`New community message: ${msg}`);
+        renderCommunity();
+        input.value = '';
+      }
+    }
+
+    function renderCommunity() {
+      const ul = document.getElementById('communityList');
+      if(!ul) return;
+      ul.innerHTML = '';
+      communityMessages.forEach(msg => {
+        const li = document.createElement('li');
+        li.className = 'community-message';
+        li.innerText = msg;
+        ul.appendChild(li);
+      });
+    }
+
+    function goBack() { window.location.href = "index.html"; }
+  </script>
+</body>
+</html>

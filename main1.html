@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commit2Team - Find Your Teammates</title>
+    
+    <link rel="stylesheet" href="main.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="ri-code-s-slash-line"></i>
+                <h1>Commit2Team</h1>
+            </div>
+            <nav>
+                 <a href="resume-analyzer.html" class="resume-btn" id="resumeBtn">
+    <span class="icon"><i class="ri-medal-line"></i></span>
+    <span class="text">Resume Analyzer</span>
+                </a>
+                <a href="index1.html" class="resume-btn" id="resumeBtn">
+    <span class="icon"><i class="ri-medal-line"></i></span>
+    <span class="text">LLM Analysis</span>
+                </a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <h2>Find Your Perfect Teammates</h2>
+                <p>Connect with talented individuals and build winning teams</p>
+            </section>
+
+            <section class="filter-section">
+                <div class="filter-container">
+                    <h3><i class="ri-filter-line"></i> Filter Students</h3>
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label for="skillFilter">Skill Category</label>
+                            <select id="skillFilter">
+                                <option value="all">All Skills</option>
+                                <option value="frontend">Frontend Development</option>
+                                <option value="backend">Backend Development</option>
+                                <option value="fullstack">Full-Stack Development</option>
+                                <option value="ai-ml">AI/ML</option>
+                                <option value="mobile">Mobile Development</option>
+                                <option value="ui-ux">UI/UX Design</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="genderFilter">Gender</label>
+                            <select id="genderFilter">
+                                <option value="all">All Genders</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                                <option value="prefer-not-to-say">Prefer not to say</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="yearFilter">Academic Year</label>
+                            <select id="yearFilter">
+                                <option value="all">All Years</option>
+                                <option value="1st">1st Year</option>
+                                <option value="2nd">2nd Year</option>
+                                <option value="3rd">3rd Year</option>
+                                <option value="4th">4th Year</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="collegeFilter">College</label>
+                            <input type="text" id="collegeFilter" placeholder="Search by college name">
+                        </div>
+                    </div>
+                    
+                    <div class="filter-actions">
+                        <button id="applyFilter" class="filter-btn">
+                            <i class="ri-search-line"></i> Apply Filters
+                        </button>
+                        <button id="clearFilter" class="filter-btn secondary">
+                            <i class="ri-refresh-line"></i> Clear Filters
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="team-cards">
+                <!-- User cards will be dynamically loaded here -->
+            </section>
+        </main>
+    </div>
+
+    
+    <script src="main1.js"></script>
+
+</body>
+</html>
