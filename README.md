@@ -25,8 +25,7 @@ Our project stands out because it **quantifies engagement and performance**, goi
 - **Frontend**: React + TailwindCSS
 - **Backend**: Node.js + Express
 - **Database**: MongoDB
-- **ML/NLP**: Python (scikit-learn, NLTK, spaCy, TensorFlow)
-- **Deployment**: Vercel (frontend), Render / Heroku (backend)
+- **ML/NLP**: Python (scikit-learn, NLTK, spaCy
 
 ---
 
