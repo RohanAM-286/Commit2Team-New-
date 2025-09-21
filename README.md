@@ -82,10 +82,10 @@ python app.py
 
 ## 🎯 Team :Git Happens
 
-* 👨‍💻 Rohan A M 
-* 👩‍💻 Pushpanjal 
-* 👨‍💻 Sai Amruth
-* 👩‍💻Akul
+* Rohan A M 
+* Pushpanjali
+* Sai Amruth
+* Akul
 
 
 
