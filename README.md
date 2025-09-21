@@ -57,27 +57,6 @@ Our project stands out because it **quantifies engagement and performance**, goi
 }
 ```
 
-### `analytics`
-
-```json
-{
-  "_id": ObjectId,
-  "teamId": ObjectId,
-  "sentimentSummary": {
-    "positive": 10,
-    "neutral": 5,
-    "negative": 2
-  },
-  "teamScore": 85,
-  "balancedMembers": [
-    {"userId": ObjectId, "suggestedTeam": "Team Beta"}
-  ],
-  "lastUpdated": ISODate
-}
-```
-
----
-
 ## 🌐 API Endpoints
 
 | Method | Endpoint                 | Description                                              |
