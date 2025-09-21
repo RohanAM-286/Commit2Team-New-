@@ -1,4 +1,151 @@
 # Commit2Team
+
+## 📌 Overview
+Commit2Team is our hackathon project built in **36 hours**.  
+It uses **NLP + ML** to **analyze team communication in real-time**, calculate **team scores**, and suggest **balanced team configurations** for maximum productivity.
+
+Our project stands out because it **quantifies engagement and performance**, going beyond typical messaging apps.
+
+## ✨ Key Features
+- 🗣️ **Message Analysis**: Detects sentiment, urgency, and intent in messages.
+- 📊 **Real-Time Team Score**: Scores teams based on engagement, sentiment, and task completion.
+- ⚖️ **Balanced Team Suggestions**: Recommends redistributing members for optimal collaboration.
+- 🌐 **Live Dashboard**: Visualizes team communication, sentiment trends, and team scores.
+
+## 🧠 NLP Concepts Implemented
+1. Tokenization, Stopword Removal, Stemming & Lemmatization
+2. Bag of Words (BoW) & TF-IDF
+3. Word Embeddings (Word2Vec / GloVe)
+4. Text Classification & Sentiment Analysis
+
+
+---
+
+## 🛠️ Tech Stack
+- **Frontend**: React + TailwindCSS
+- **Backend**: Node.js + Express
+- **Database**: MongoDB
+- **ML/NLP**: Python (scikit-learn, NLTK, spaCy, TensorFlow)
+- **Deployment**: Vercel (frontend), Render / Heroku (backend)
+
+---
+
+## 📂 Database (MongoDB) Structure
+
+**Collections**:
+
+### `users`
+```json
+{
+  "_id": ObjectId,
+  "name": "Rohan",
+  "email": "rohan@example.com",
+  "teamId": ObjectId,
+  "role": "Frontend Developer",
+  "score": 0
+}
+````
+
+### `teams`
+
+```json
+{
+  "_id": ObjectId,
+  "name": "Team Alpha",
+  "members": [ObjectId],
+  "teamScore": 85,
+  "createdAt": ISODate
+}
+```
+
+### `analytics`
+
+```json
+{
+  "_id": ObjectId,
+  "teamId": ObjectId,
+  "sentimentSummary": {
+    "positive": 10,
+    "neutral": 5,
+    "negative": 2
+  },
+  "teamScore": 85,
+  "balancedMembers": [
+    {"userId": ObjectId, "suggestedTeam": "Team Beta"}
+  ],
+  "lastUpdated": ISODate
+}
+```
+
+---
+
+## 🌐 API Endpoints
+
+| Method | Endpoint                 | Description                                              |
+| ------ | ------------------------ | -------------------------------------------------------- |
+| POST   | `/api/auth/register`     | Register a new user                                      |
+| POST   | `/api/auth/login`        | Login user                                               |
+| GET    | `/api/teams/:teamId`     | Get team details & current score                         |
+| POST   | `/api/messages`          | Send a new message                                       |
+| GET    | `/api/messages/:teamId`  | Get all messages for a team                              |
+| GET    | `/api/analytics/:teamId` | Get sentiment, team score, and balanced team suggestions |
+| POST   | `/api/analytics/update`  | Trigger ML/NLP analysis & update team scores             |
+
+---
+
+## ⚡ NLP + ML Workflow
+
+1. **User sends a message** → saved in `messages` collection.
+2. **Backend processes the text**:
+
+   * Tokenization, stopword removal, lemmatization
+   * Convert text to numerical features (TF-IDF / embeddings)
+3. **ML models predict**:
+   * Team member clustering for balanced teams
+4. **Update `analytics` & `teams` collections**:
+
+   * Compute **teamScore** based on aggregated sentiment + engagement
+   * Suggest team rebalancing if scores are uneven
+5. **Frontend dashboard updates in real-time** via WebSockets.
+
+---
+
+## ⚡ Getting Started
+
+```bash
+# Clone repo
+git clone https://github.com/<your-username>/Commit2Team.git
+cd Commit2Team
+
+# Install frontend dependencies
+cd frontend
+npm install
+npm run dev
+
+# Install backend dependencies
+cd ../backend
+pip install -r requirements.txt
+python app.py
+```
+
+---
+
+## 🎯 Team :Git Happens
+
+* 👨‍💻 Rohan A M 
+* 👩‍💻 Pushpanjal 
+* 👨‍💻 Sai Amruth
+* 👩‍💻Akul
+
+
+
+## 💡 Future Scope
+
+* 🤖 Integrate **LLMs (BERT/GPT)** for smarter suggestions
+* 📱 Mobile app for team management
+* 🌐 Expand to **multilingual support**
+
+
 <img width="1901" height="869" alt="image" src="https://github.com/user-attachments/assets/aa96093e-cde1-4b4b-a95f-00c8a5b38998" />
 <img width="1903" height="917" alt="image" src="https://github.com/user-attachments/assets/fdcf726e-9df6-4150-8433-41c847153ac6" />
 <img width="1836" height="897" alt="image" src="https://github.com/user-attachments/assets/672ae4a7-a89e-45ca-9373-04100d49c645" />
