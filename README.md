@@ -23,7 +23,7 @@ Our project stands out because it **quantifies engagement and performance**, goi
 
 ## 🛠️ Tech Stack
 - **Frontend**: React + TailwindCSS
-- **Backend**: Node.js + Express
+- **Backend**: FastAPI ,Node.js + Express
 - **Database**: MongoDB
 - **ML/NLP**: Python (scikit-learn, NLTK, spaCy
 
