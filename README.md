@@ -29,34 +29,6 @@ Our project stands out because it **quantifies engagement and performance**, goi
 
 ---
 
-## 📂 Database (MongoDB) Structure
-
-**Collections**:
-
-### `users`
-```json
-{
-  "_id": ObjectId,
-  "name": "Rohan",
-  "email": "rohan@example.com",
-  "teamId": ObjectId,
-  "role": "Frontend Developer",
-  "score": 0
-}
-````
-
-### `teams`
-
-```json
-{
-  "_id": ObjectId,
-  "name": "Team Alpha",
-  "members": [ObjectId],
-  "teamScore": 85,
-  "createdAt": ISODate
-}
-```
-
 ## 🌐 API Endpoints
 
 | Method | Endpoint                 | Description                                              |
